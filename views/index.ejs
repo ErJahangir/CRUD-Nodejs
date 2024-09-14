@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <%- include('./partials/head')%>
+    <title><%= title %></title>
+  </head>
+  <body>
+    <%- include('./partials/navbar')%>
+
+    <div class="container">
+      <div class="row my-4">
+        <div class="mb-2">
+          <input
+            type="text"
+            id="search-input"
+            name="search"
+            placeholder="Enter name, email, or phone"
+            class="form-control"
+          />
+          <button id="search-btn" class="btn btn-primary mt-2">Search</button>
+        </div>
+
+        <div class="col-lg-12">
+          <div class="table-responsive" id="user-table">
+            <% if(users.length > 0){ %>
+            <table class="table table-striped text-center">
+              <thead>
+                <tr class="table-dark">
+                  <th>ID</th>
+                  <th>Image</th>
+                  <th>Name</th>
+                  <th>Email</th>
+                  <th>Phone</th>
+                  <th>Action</th>
+                </tr>
+              </thead>
+              <tbody id="user-body">
+                <% users.forEach((user, index) => { %>
+                <tr class="align-middle">
+                  <td><%= index + 1 %></td>
+                  <td>
+                    <img
+                      src="/uploads/<%= user.image %>"
+                      style="width: 50px; height: 50px; object-fit: cover"
+                    />
+                  </td>
+                  <td><%= user.name %></td>
+                  <td><%= user.email %></td>
+                  <td><%= user.phone %></td>
+                  <td>
+                    <a href="/edit/<%= user._id %>" class="text-success"
+                      >edit</a
+                    >
+                    <a href="/delete/<%= user._id %>" class="text-danger"
+                      >delete</a
+                    >
+                  </td>
+                </tr>
+                <% }) %>
+              </tbody>
+            </table>
+            <% } else { %>
+            <h2 class="align-center justify-center">No data found</h2>
+            <% } %>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- This is Script   -->
+
+    <%- include('./partials/script')%>
+
+    <script>
+      document
+        .getElementById("search-btn")
+        .addEventListener("click", function () {
+          const query = document.getElementById("search-input").value;
+
+          fetch(`/search?q=${query}`)
+            .then((response) => response.json())
+            .then((data) => {
+              const tableBody = document.getElementById("user-body");
+              let tableRows = "";
+
+              if (data.length > 0) {
+                data.forEach((user, index) => {
+                  tableRows += `
+                  <tr class="align-middle">
+                    <td>${index + 1}</td>
+                    <td><img src="/uploads/${
+                      user.image
+                    }" style="width: 50px; height: 50px; object-fit: cover"/></td>
+                    <td>${user.name}</td>
+                    <td>${user.email}</td>
+                    <td>${user.phone}</td>
+                    <td>
+                      <a href="/edit/${user._id}" class="text-success">edit</a>
+                      <a href="/delete/${
+                        user._id
+                      }" class="text-danger">delete</a>
+                    </td>
+                  </tr>
+                `;
+                });
+              } else {
+                tableRows =
+                  '<tr><td colspan="6"><h2>No data found</h2></td></tr>';
+              }
+
+              tableBody.innerHTML = tableRows;
+            })
+            .catch((error) =>
+              console.error("Error fetching search results:", error)
+            );
+        });
+    </script>
+  </body>
+</html>
