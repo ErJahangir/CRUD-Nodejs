@@ -2,8 +2,8 @@
     "version": 2,
     "builds": [
         {
-            "src": "index.jsx",
-            "user": "@vercel/node"
+            "src": "index.js",
+            "use": "@vercel/node"
         }
     ],
     "routes": [
