@@ -4,14 +4,14 @@
     <%- include('./partials/head')%>
     <title><%= title %></title>
   </head>
-  <body class="bg-dark text-light">
+  <body class="fw-bold">
     <%- include('./partials/navbar')%>
 
     <div class="container">
-      <div class="row justify-content-center">
-        <div class="col-12 col-md-6 bg-green">
-          <h2><%= user.title %></h2>
+      <div class="row justify-content-center bg-primary bg-gradient">
+        <div class="col-12 col-md-6">
           <div class="modal-body">
+            <h2>Update user details</h2>
             <form
               action="/update/<%= user._id%>"
               method="POST"
@@ -22,7 +22,7 @@
                 <input
                   type="text"
                   value="<%= user.name%>"
-                  class="form-control bg-dark text-light border-secondary"
+                  class="form-control border-secondary"
                   id="name"
                   name="name"
                   placeholder="Enter user name"
@@ -33,7 +33,7 @@
                 <input
                   type="email"
                   value="<%= user.email%>"
-                  class="form-control bg-dark text-light border-secondary"
+                  class="form-control border-secondary"
                   id="email"
                   name="email"
                   placeholder="Enter email"
@@ -44,7 +44,7 @@
                 <input
                   type="tel"
                   value="<%= user.phone%>"
-                  class="form-control bg-dark text-light border-secondary"
+                  class="form-control border-secondary"
                   id="phone"
                   name="phone"
                   placeholder="Enter phone number"
@@ -54,7 +54,7 @@
                 <label for="image" class="form-label">Profile Image</label>
                 <input
                   type="file"
-                  class="form-control bg-dark text-light border-secondary"
+                  class="form-control border-secondary"
                   id="image"
                   name="image"
                 />
@@ -65,7 +65,7 @@
                 />
               </div>
               <input type="hidden" name="old_image" value="<%= user.image%>" />
-              <button type="submit" class="btn btn-primary w-100">
+              <button type="submit" class="btn btn-success w-100 mb-3">
                 update user
               </button>
             </form>
