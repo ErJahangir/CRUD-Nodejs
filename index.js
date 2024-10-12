@@ -4,7 +4,7 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const userRoutes = require("./routes/routes");
 const app = express();
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 5000;
 
 // Database connection
 mongoose
